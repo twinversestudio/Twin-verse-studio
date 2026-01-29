@@ -1,1 +1,1137 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cairo Metro Remastered - Twin Verse Studio</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <style>
+        /* استيراد الخطوط */
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Oswald:wght@200..700&family=Teko:wght@300..700&display=swap');
+
+        /* إعادة تعيين أساسية */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-black: #0d1016;
+            --metro-red: #e11d48;
+            --text-white: #ffffff;
+            --text-gray: #9ca3af;
+            --zinc-900: #18181b;
+            --zinc-950: #09090b;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg-black);
+            color: var(--text-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+            padding-top: 80px;
+            /* مساحة للهيدر */
+        }
+
+        /* شريط التمرير المخصص */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--zinc-950);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--metro-red);
+            border-radius: 5px;
+        }
+
+        /* الهيدر */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: var(--text-white);
+            transition: all 0.3s;
+        }
+
+        .logo:hover {
+            color: var(--metro-red);
+            transform: scale(1.05);
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-white);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            color: var(--metro-red);
+            background: rgba(225, 29, 72, 0.1);
+        }
+
+        .btn-download {
+            background: var(--metro-red);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(225, 29, 72, 0.3);
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(225, 29, 72, 0.5);
+        }
+
+        /* قائمة الموبايل */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.98);
+            z-index: 9999;
+            padding: 2rem;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mobile-menu a {
+            color: white;
+            font-size: 2rem;
+            margin: 1rem 0;
+            text-decoration: none;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* البطل Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #09090b 0%, #18181b 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(225, 29, 72, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(225, 29, 72, 0.05) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            max-width: 1000px;
+        }
+
+        .hero h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            background: linear-gradient(45deg, #fff, var(--metro-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.4s backwards;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: var(--metro-red);
+            color: white;
+            box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(225, 29, 72, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: black;
+        }
+
+        /* الأقسام */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .section-title .highlight {
+            color: var(--metro-red);
+        }
+
+        .section-title .underline {
+            width: 100px;
+            height: 4px;
+            background: var(--metro-red);
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .about-card {
+            background: var(--zinc-900);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--metro-red);
+            box-shadow: 0 10px 30px rgba(225, 29, 72, 0.2);
+        }
+
+        .about-card h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            color: var(--metro-red);
+        }
+
+        .about-card p {
+            color: var(--text-gray);
+            line-height: 1.8;
+        }
+
+        /* قسم الأخبار */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .news-card {
+            background: var(--zinc-900);
+            border-radius: 15px;
+            overflow: hidden;
+            border-left: 4px solid var(--metro-red);
+            transition: all 0.3s;
+            padding: 2rem;
+        }
+
+        .news-card:hover {
+            transform: translateX(-10px);
+            box-shadow: 0 10px 30px rgba(225, 29, 72, 0.3);
+        }
+
+        .news-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .badge-green {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .badge-blue {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .badge-yellow {
+            background: rgba(234, 179, 8, 0.2);
+            color: #eab308;
+            border: 1px solid rgba(234, 179, 8, 0.3);
+        }
+
+        .news-card h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .news-card p {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        /* المعرض */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 16/9;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 50%);
+            opacity: 0;
+            transition: all 0.3s;
+            display: flex;
+            align-items: flex-end;
+            padding: 2rem;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            color: var(--metro-red);
+        }
+
+        /* التنزيل */
+        .download-section {
+            background: linear-gradient(135deg, var(--zinc-950) 0%, var(--zinc-900) 100%);
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .download-section h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .download-section p {
+            color: var(--text-gray);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .download-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .download-stat {
+            padding: 1.5rem;
+            background: rgba(225, 29, 72, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(225, 29, 72, 0.2);
+        }
+
+        .download-stat h4 {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .download-stat p {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* الفوتر */
+        footer {
+            background: var(--zinc-950);
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-content h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-content p {
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            border-color: var(--metro-red);
+            background: var(--metro-red);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header nav {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+        }
+
+        /* Modal للتواصل */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--zinc-900);
+            padding: 3rem;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--metro-red);
+            transform: rotate(90deg);
+        }
+
+        .modal h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-gray);
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: var(--zinc-950);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: white;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--metro-red);
+            box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: var(--metro-red);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(225, 29, 72, 0.4);
+        }
+
+        /* Loading animation */
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">
+                <img src="logo.png" alt="Twin Verse Studio" style="height: 2rem; width: auto;"> TWIN VERSE STUDIO
+            </a>
+            <nav>
+                <a href="#home">الـرئيسية</a>
+                <a href="#games">ألعابنا</a>
+                <a href="#about">عن Cairo Metro</a>
+                <a href="#news">الأخبار</a>
+                <a href="#gallery">المعرض</a>
+                <a href="#download" class="btn-download">تحميل اللعبة</a>
+            </nav>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="close-menu" onclick="toggleMobileMenu()">×</button>
+        <a href="#home" onclick="toggleMobileMenu()">الـرئيسية</a>
+        <a href="#games" onclick="toggleMobileMenu()">ألعابنا</a>
+        <a href="#about" onclick="toggleMobileMenu()">عن اللعبة</a>
+        <a href="#news" onclick="toggleMobileMenu()">الأخبار</a>
+        <a href="#gallery" onclick="toggleMobileMenu()">المعرض</a>
+        <a href="#download" onclick="toggleMobileMenu()">تحميل</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <span class="news-badge badge-red"
+                style="margin-bottom: 1rem; border: 1px solid var(--metro-red); color: white; background: rgba(225, 29, 72, 0.2);">أحدث
+                إصدار من الاستوديو</span>
+            <h1>CAIRO METRO REMASTERED</h1>
+            <p>تجربة رعب نفسي في أعماق مترو القاهرة. واجه مخاوفك وحل الألغاز المعقدة في الظلام</p>
+            <div class="hero-buttons">
+                <a href="#download" class="btn btn-primary">تحميل الآن</a>
+                <a href="#games" class="btn btn-secondary">تصفح كل الألعاب</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Section (New Studio Section) -->
+    <section id="games" style="background: var(--zinc-900);">
+        <div class="section-title">
+            <h2>مشاريع <span class="highlight">الاستوديو</span></h2>
+            <div class="underline"></div>
+        </div>
+        <div class="about-grid"> <!-- Using same grid class for consistency -->
+            <!-- Game 1: Cairo Metro -->
+            <div class="about-card"
+                style="border-color: var(--metro-red); text-align: right; padding: 0; overflow: hidden;">
+                <div
+                    style="height: 220px; background: url('thegame.jpg') center/cover no-repeat; display: flex; align-items: center; justify-content: center; position: relative;">
+                    <div style="position: absolute; top: 10px; left: 10px;">
+                        <span class="news-badge badge-green">متاح الآن</span>
+                    </div>
+                </div>
+                <div style="padding: 2rem; text-align: center;">
+                    <h3 style="margin-top: 0;">Cairo Metro Remastered</h3>
+                    <p style="margin-bottom: 1.5rem;">لعبة الرعب الأولى من الاستوديو. تدور أحداثها داخل محطات مترو
+                        القاهرة المهجورة.</p>
+                    <a href="#download" class="btn btn-primary" style="font-size: 0.9rem; padding: 0.5rem 1.5rem;">صفحة
+                        اللعبة</a>
+                </div>
+            </div>
+
+            <!-- Game 2: Next Project -->
+            <div class="about-card"
+                style="border-color: rgba(255,255,255,0.1); opacity: 0.7; padding: 0; overflow: hidden;">
+                <div
+                    style="height: 220px; background: linear-gradient(45deg, #0d1016, #1f2937); display: flex; align-items: center; justify-content: center; position: relative;">
+                    <!-- Future Image Here: style="background: url('image.jpg') center/cover" -->
+                    <div style="position: absolute; top: 10px; left: 10px;">
+                        <span class="news-badge badge-yellow">قيد التطوير</span>
+                    </div>
+                </div>
+                <div style="padding: 2rem; text-align: center;">
+                    <h3 style="margin-top: 0; color: var(--text-gray);">Project 2 (Coming Soon)</h3>
+                    <p style="margin-bottom: 1.5rem;">المشروع القادم للاستوديو. مغامرة جديدة وعالم مختلف تماماً.</p>
+                    <button class="btn btn-secondary" disabled
+                        style="opacity: 0.5; cursor: not-allowed; font-size: 0.9rem; padding: 0.5rem 1.5rem;">قريباً</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="section-title">
+            <h2>عن <span class="highlight">اللعبة</span></h2>
+            <div class="underline"></div>
+        </div>
+        <div class="about-grid">
+            <div class="about-card">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🧩</div>
+                <h3>ألغاز معقدة</h3>
+                <p>حل ألغاز مبتكرة ومعقدة في كل مستوى. كل لغز يكشف جزءاً من القصة المخيفة</p>
+            </div>
+            <div class="about-card">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">👁️</div>
+                <h3>تجربة سينمائية</h3>
+                <p>استمتع بمشاهد سينمائية مذهلة وقصة غامضة تجذبك من أول لحظة</p>
+            </div>
+            <div class="about-card">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">😱</div>
+                <h3>رعب نفسي</h3>
+                <p>أجواء مرعبة وموسيقى تصويرية تخلق تجربة رعب لا تُنسى</p>
+            </div>
+            <div class="about-card">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">❤️</div>
+                <h3>صُنع بشغف</h3>
+                <p>تم تطوير اللعبة بالكامل من قبل مطور مستقل مصري</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section id="news">
+        <div class="section-title">
+            <h2>آخر <span class="highlight">الأخبار</span></h2>
+            <div class="underline"></div>
+        </div>
+        <div class="news-grid">
+            <div class="news-card">
+                <span class="news-badge badge-green">✓ تم الإصدار</span>
+                <h3>الإطلاق الرسمي</h3>
+                <p>Cairo Metro Remastered متاح الآن! جرب رعب الأعماق واستكشف أسرار المترو المظلم</p>
+                <small style="color: #666; display: block; margin-top: 1rem;">2 ديسمبر 2025</small>
+            </div>
+            <div class="news-card">
+                <span class="news-badge badge-blue">⚡ Patch 1.1</span>
+                <h3>تحسينات كبرى</h3>
+                <p>تحسينات في الأداء والاستقرار. إصلاحات للإضاءة وتحسين الأداء لجميع الأنظمة</p>
+                <small style="color: #666; display: block; margin-top: 1rem;">16 يناير 2026</small>
+            </div>
+            <div class="news-card">
+                <span class="news-badge badge-yellow">🚧 قريباً</span>
+                <h3>لعبة قوية قادمة</h3>
+                <p>فكرة جديدة بتصميم جديد</p>
+                <small style="color: #666; display: block; margin-top: 1rem;">قريباً</small>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery">
+        <div class="section-title">
+            <h2><span class="highlight">المعرض</span></h2>
+            <div class="underline"></div>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="gallery-1.png" alt="Metro Station">
+                <div class="gallery-overlay">
+                    <h3>محطات مهجورة</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="gallery_3.png" alt="Dark Corridors">
+                <div class="overlay">
+                    <h3>الأنفاق المظلمة</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="gallery-2.png" alt="Horror">
+                <div class="gallery-overlay">
+                    <h3>الرعب ينتظرك</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download">
+        <div class="download-section">
+            <h2>حمّل اللعبة الآن</h2>
+            <p>جرب تجربة الرعب الفريدة مجاناً</p>
+
+            <div class="download-info">
+                <div class="download-stat">
+                    <h4>الإصدار</h4>
+                    <p>v2.0.0</p>
+                </div>
+                <div class="download-stat">
+                    <h4>الحجم</h4>
+                    <p>4.9 GB</p>
+                </div>
+                <div class="download-stat">
+                    <h4>التنزيلات</h4>
+                    <p>7,500+</p>
+                </div>
+                <div class="download-stat">
+                    <h4>النظام</h4>
+                    <p>Windows</p>
+                </div>
+            </div>
+
+            <a href="https://drive.usercontent.google.com/download?id=1spPjVM34NqOtqxQ8bNmlJnwqHA-VOcTX&export=download&authuser=0"
+                target="_blank" class="btn btn-primary" style="display: inline-block; margin: 1rem;">
+                ⬇️ تحميل مباشر
+            </a>
+
+            <div style="margin-top: 3rem; padding-top: 3rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                <h3 style="margin-bottom: 1.5rem;">📋 متطلبات التشغيل</h3>
+                <div
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: right;">
+                    <div>
+                        <h4 style="color: var(--metro-red); margin-bottom: 1rem;">الحد الأدنى</h4>
+                        <p style="font-size: 0.9rem; line-height: 1.8;">
+                            <strong>OS:</strong> Windows 10 64-bit<br>
+                            <strong>CPU:</strong> Intel i3-8100F<br>
+                            <strong>RAM:</strong> 8 GB<br>
+                            <strong>GPU:</strong> GTX 750 2GB<br>
+                            <strong>Storage:</strong> 4.9 GB
+                        </p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--metro-red); margin-bottom: 1rem;">الموصى به</h4>
+                        <p style="font-size: 0.9rem; line-height: 1.8;">
+                            <strong>OS:</strong> Windows 10 64-bit<br>
+                            <strong>CPU:</strong> Intel i5-9400F<br>
+                            <strong>RAM:</strong> 8 GB<br>
+                            <strong>GPU:</strong> GTX 1050<br>
+                            <strong>Storage:</strong> 4.9 GB
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Donation Section -->
+            <div
+                style="margin-top: 3rem; padding: 2rem; border: 1px solid rgba(234, 179, 8, 0.3); background: rgba(234, 179, 8, 0.05); border-radius: 15px;">
+                <h3 style="color: #eab308; margin-bottom: 1rem; font-family: 'Oswald', sans-serif;">🤝 ادعم المطور</h3>
+                <p style="color: var(--text-gray); margin-bottom: 1.5rem;">لو حابب تدعمني علشان نقدم حاجات اقوي</p>
+                <div style="display: flex; justify-content: center; gap: 2rem; align-items: center;">
+                    <a href="https://ipn.eg/S/bankmisr.youssef/instapay/01zYhE" target="_blank"
+                        style="text-decoration: none; text-align: center; display: block;">
+                        <img src="insta-logo.png"
+                            style="height: 50px; width: auto; object-fit: contain; margin-bottom: 0.5rem;"
+                            alt="Instapay">
+                        <p style="font-size: 0.8rem; color: #ccc;">Instapay</p>
+                    </a>
+                    <a href="http://vf.eg/vfcash?id=mt&qrId=EHoLvk" target="_blank"
+                        style="text-decoration: none; text-align: center; display: block;">
+                        <img src="voda-logo.png"
+                            style="height: 50px; width: auto; object-fit: contain; margin-bottom: 0.5rem;"
+                            alt="Vodafone Cash">
+                        <p style="font-size: 0.8rem; color: #ccc;">Vodafone Cash</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h3>Twin Verse Studio</h3>
+            <p>العقول خلف Twin Verse. نبني تجارب تطاردك بعد انتهاء اللعب.</p>
+
+            <div class="social-links">
+                <a href="https://www.youtube.com/@TwinVerseStudio" target="_blank" class="social-link"
+                    title="YouTube"><img src="youtube-logo.png" style="width: 50%; height: auto; object-fit: contain;"
+                        alt="YouTube"></a>
+                <a href="https://www.tiktok.com/@twin.verse.studio" target="_blank" class="social-link"
+                    title="TikTok"><img src="tik-tok-logo.png" style="width: 50%; height: auto; object-fit: contain;"
+                        alt="TikTok"></a>
+                <a href="https://ipn.eg/S/bankmisr.youssef/instapay/01zYhE" target="_blank" class="social-link"
+                    title="Instapay Donation"><img src="insta-logo.png"
+                        style="width: 60%; height: auto; object-fit: contain;" alt="Instapay"></a>
+                <a href="http://vf.eg/vfcash?id=mt&qrId=EHoLvk" target="_blank" class="social-link"
+                    title="Vodafone Cash Donation"><img src="voda-logo.png"
+                        style="width: 60%; height: auto; object-fit: contain;" alt="Vodafone Cash"></a>
+                <a href="javascript:void(0)" onclick="openContactModal()" class="social-link" title="Contact">✉️</a>
+            </div>
+
+            <div class="copyright">
+                <p>© 2026 Twin Verse Studio. جميع الحقوق محفوظة.</p>
+                <p style="margin-top: 0.5rem;">صُمم بواسطة <a href="https://falcon-core.vercel.ap/" target="_blank"
+                        style="color: var(--metro-red); text-decoration: none;"> Ayman</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeContactModal()">×</button>
+            <h3>تواصل معنا</h3>
+            <form action="https://formsubmit.co/twinversestudio@gmail.com" method="POST" id="contactForm">
+                <input type="hidden" name="_subject" value="رسالة جديدة من موقع Cairo Metro">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="about:blank">
+
+                <div class="form-group">
+                    <label>الاسم</label>
+                    <input type="text" name="name" required placeholder="أدخل اسمك">
+                </div>
+
+                <div class="form-group">
+                    <label>البريد الإلكتروني</label>
+                    <input type="email" name="email" required placeholder="your@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label>الموضوع</label>
+                    <input type="text" name="subject" required placeholder="كيف يمكننا مساعدتك؟">
+                </div>
+
+                <div class="form-group">
+                    <label>الرسالة</label>
+                    <textarea name="message" required placeholder="اكتب رسالتك هنا..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">إرسال الرسالة</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Mobile Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+
+        // Contact Modal
+        function openContactModal() {
+            document.getElementById('contactModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeContactModal() {
+            document.getElementById('contactModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('contactModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeContactModal();
+            }
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            const btn = this.querySelector('.submit-btn');
+            btn.innerHTML = '<span class="loader"></span> جاري الإرسال...';
+            btn.disabled = true;
+
+            // Reset after submission
+            setTimeout(() => {
+                btn.innerHTML = 'إرسال الرسالة';
+                btn.disabled = false;
+            }, 3000);
+        });
+
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function (entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections and cards
+        document.querySelectorAll('section, .about-card, .news-card, .gallery-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // Parallax effect for hero
+        window.addEventListener('scroll', function () {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function (e) {
+            // ESC to close modal
+            if (e.key === 'Escape') {
+                closeContactModal();
+                toggleMobileMenu();
+            }
+        });
+
+        console.log('%c🎮 Cairo Metro Remastered', 'font-size: 24px; color: #e11d48; font-weight: bold;');
+        console.log('%cWebsite by Twin Verse Studio', 'font-size: 14px; color: #666;');
+    </script>
+</body>
+
+</html>
