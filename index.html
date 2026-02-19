@@ -82,10 +82,10 @@
             transition: all 0.3s;
         }
 
-        .logo:hover {
-            color: var(--metro-red);
-            transform: scale(1.05);
-        }
+            .logo:hover {
+                color: var(--metro-red);
+                transform: scale(1.05);
+            }
 
         nav {
             display: flex;
@@ -93,22 +93,22 @@
             align-items: center;
         }
 
-        nav a {
-            color: var(--text-white);
-            text-decoration: none;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            transition: all 0.3s;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-        }
+            nav a {
+                color: var(--text-white);
+                text-decoration: none;
+                font-weight: 600;
+                text-transform: uppercase;
+                font-size: 0.9rem;
+                letter-spacing: 1px;
+                transition: all 0.3s;
+                padding: 0.5rem 1rem;
+                border-radius: 5px;
+            }
 
-        nav a:hover {
-            color: var(--metro-red);
-            background: rgba(225, 29, 72, 0.1);
-        }
+                nav a:hover {
+                    color: var(--metro-red);
+                    background: rgba(225, 29, 72, 0.1);
+                }
 
         .btn-download {
             background: var(--metro-red);
@@ -121,10 +121,10 @@
             box-shadow: 0 4px 15px rgba(225, 29, 72, 0.3);
         }
 
-        .btn-download:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(225, 29, 72, 0.5);
-        }
+            .btn-download:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(225, 29, 72, 0.5);
+            }
 
         /* قائمة الموبايل */
         .mobile-menu-btn {
@@ -148,20 +148,20 @@
             padding: 2rem;
         }
 
-        .mobile-menu.active {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+            .mobile-menu.active {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
 
-        .mobile-menu a {
-            color: white;
-            font-size: 2rem;
-            margin: 1rem 0;
-            text-decoration: none;
-            font-family: 'Oswald', sans-serif;
-        }
+            .mobile-menu a {
+                color: white;
+                font-size: 2rem;
+                margin: 1rem 0;
+                text-decoration: none;
+                font-family: 'Oswald', sans-serif;
+            }
 
         .close-menu {
             position: absolute;
@@ -186,23 +186,20 @@
             padding: 2rem;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background:
-                radial-gradient(circle at 20% 50%, rgba(225, 29, 72, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(225, 29, 72, 0.05) 0%, transparent 50%);
-            animation: pulse 8s ease-in-out infinite;
-        }
+            .hero::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: radial-gradient(circle at 20% 50%, rgba(225, 29, 72, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(225, 29, 72, 0.05) 0%, transparent 50%);
+                animation: pulse 8s ease-in-out infinite;
+            }
 
         @keyframes pulse {
 
-            0%,
-            100% {
+            0%, 100% {
                 opacity: 0.5;
             }
 
@@ -275,10 +272,10 @@
             box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(225, 29, 72, 0.6);
-        }
+            .btn-primary:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 25px rgba(225, 29, 72, 0.6);
+            }
 
         .btn-secondary {
             background: transparent;
@@ -286,10 +283,10 @@
             border: 2px solid white;
         }
 
-        .btn-secondary:hover {
-            background: white;
-            color: black;
-        }
+            .btn-secondary:hover {
+                background: white;
+                color: black;
+            }
 
         /* الأقسام */
         section {
@@ -303,24 +300,24 @@
             margin-bottom: 4rem;
         }
 
-        .section-title h2 {
-            font-family: 'Oswald', sans-serif;
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-        }
+            .section-title h2 {
+                font-family: 'Oswald', sans-serif;
+                font-size: clamp(2.5rem, 5vw, 4rem);
+                text-transform: uppercase;
+                margin-bottom: 1rem;
+            }
 
-        .section-title .highlight {
-            color: var(--metro-red);
-        }
+            .section-title .highlight {
+                color: var(--metro-red);
+            }
 
-        .section-title .underline {
-            width: 100px;
-            height: 4px;
-            background: var(--metro-red);
-            margin: 0 auto;
-            border-radius: 2px;
-        }
+            .section-title .underline {
+                width: 100px;
+                height: 4px;
+                background: var(--metro-red);
+                margin: 0 auto;
+                border-radius: 2px;
+            }
 
         /* About Section */
         .about-grid {
@@ -339,23 +336,23 @@
             text-align: center;
         }
 
-        .about-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--metro-red);
-            box-shadow: 0 10px 30px rgba(225, 29, 72, 0.2);
-        }
+            .about-card:hover {
+                transform: translateY(-10px);
+                border-color: var(--metro-red);
+                box-shadow: 0 10px 30px rgba(225, 29, 72, 0.2);
+            }
 
-        .about-card h3 {
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.5rem;
-            margin: 1rem 0;
-            color: var(--metro-red);
-        }
+            .about-card h3 {
+                font-family: 'Oswald', sans-serif;
+                font-size: 1.5rem;
+                margin: 1rem 0;
+                color: var(--metro-red);
+            }
 
-        .about-card p {
-            color: var(--text-gray);
-            line-height: 1.8;
-        }
+            .about-card p {
+                color: var(--text-gray);
+                line-height: 1.8;
+            }
 
         /* قسم الأخبار */
         .news-grid {
@@ -373,10 +370,10 @@
             padding: 2rem;
         }
 
-        .news-card:hover {
-            transform: translateX(-10px);
-            box-shadow: 0 10px 30px rgba(225, 29, 72, 0.3);
-        }
+            .news-card:hover {
+                transform: translateX(-10px);
+                box-shadow: 0 10px 30px rgba(225, 29, 72, 0.3);
+            }
 
         .news-badge {
             display: inline-block;
@@ -433,16 +430,16 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: all 0.5s;
-        }
+            .gallery-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: all 0.5s;
+            }
 
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
+            .gallery-item:hover img {
+                transform: scale(1.1);
+            }
 
         .gallery-overlay {
             position: absolute;
@@ -474,17 +471,17 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .download-section h2 {
-            font-family: 'Oswald', sans-serif;
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
+            .download-section h2 {
+                font-family: 'Oswald', sans-serif;
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
 
-        .download-section p {
-            color: var(--text-gray);
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-        }
+            .download-section p {
+                color: var(--text-gray);
+                font-size: 1.2rem;
+                margin-bottom: 2rem;
+            }
 
         .download-info {
             display: grid;
@@ -500,17 +497,17 @@
             border: 1px solid rgba(225, 29, 72, 0.2);
         }
 
-        .download-stat h4 {
-            color: var(--text-gray);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
+            .download-stat h4 {
+                color: var(--text-gray);
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+            }
 
-        .download-stat p {
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
+            .download-stat p {
+                color: white;
+                font-size: 1.5rem;
+                font-weight: bold;
+            }
 
         /* الفوتر */
         footer {
@@ -525,19 +522,19 @@
             margin: 0 auto;
         }
 
-        .footer-content h3 {
-            font-family: 'Oswald', sans-serif;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
+            .footer-content h3 {
+                font-family: 'Oswald', sans-serif;
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
 
-        .footer-content p {
-            color: var(--text-gray);
-            margin-bottom: 2rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+            .footer-content p {
+                color: var(--text-gray);
+                margin-bottom: 2rem;
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+            }
 
         .social-links {
             display: flex;
@@ -559,11 +556,11 @@
             transition: all 0.3s;
         }
 
-        .social-link:hover {
-            border-color: var(--metro-red);
-            background: var(--metro-red);
-            transform: translateY(-3px);
-        }
+            .social-link:hover {
+                border-color: var(--metro-red);
+                background: var(--metro-red);
+                transform: translateY(-3px);
+            }
 
         .copyright {
             margin-top: 2rem;
@@ -602,9 +599,9 @@
             padding: 2rem;
         }
 
-        .modal.active {
-            display: flex;
-        }
+            .modal.active {
+                display: flex;
+            }
 
         .modal-content {
             background: var(--zinc-900);
@@ -628,10 +625,10 @@
             transition: all 0.3s;
         }
 
-        .modal-close:hover {
-            color: var(--metro-red);
-            transform: rotate(90deg);
-        }
+            .modal-close:hover {
+                color: var(--metro-red);
+                transform: rotate(90deg);
+            }
 
         .modal h3 {
             font-family: 'Oswald', sans-serif;
@@ -644,36 +641,36 @@
             margin-bottom: 1.5rem;
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-gray);
-            font-weight: 600;
-        }
+            .form-group label {
+                display: block;
+                margin-bottom: 0.5rem;
+                color: var(--text-gray);
+                font-weight: 600;
+            }
 
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            background: var(--zinc-950);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: white;
-            font-family: 'Cairo', sans-serif;
-            transition: all 0.3s;
-        }
+            .form-group input,
+            .form-group textarea {
+                width: 100%;
+                padding: 1rem;
+                background: var(--zinc-950);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 10px;
+                color: white;
+                font-family: 'Cairo', sans-serif;
+                transition: all 0.3s;
+            }
 
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--metro-red);
-            box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.1);
-        }
+                .form-group input:focus,
+                .form-group textarea:focus {
+                    outline: none;
+                    border-color: var(--metro-red);
+                    box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.1);
+                }
 
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
+            .form-group textarea {
+                resize: vertical;
+                min-height: 120px;
+            }
 
         .submit-btn {
             width: 100%;
@@ -688,10 +685,10 @@
             transition: all 0.3s;
         }
 
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(225, 29, 72, 0.4);
-        }
+            .submit-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(225, 29, 72, 0.4);
+            }
 
         /* Loading animation */
         .loader {
@@ -746,8 +743,10 @@
     <section class="hero" id="home">
         <div class="hero-content">
             <span class="news-badge badge-red"
-                style="margin-bottom: 1rem; border: 1px solid var(--metro-red); color: white; background: rgba(225, 29, 72, 0.2);">أحدث
-                إصدار من الاستوديو</span>
+                  style="margin-bottom: 1rem; border: 1px solid var(--metro-red); color: white; background: rgba(225, 29, 72, 0.2);">
+                أحدث
+                إصدار من الاستوديو
+            </span>
             <h1>CAIRO METRO REMASTERED</h1>
             <p>تجربة رعب نفسي في أعماق مترو القاهرة. واجه مخاوفك وحل الألغاز المعقدة في الظلام</p>
             <div class="hero-buttons">
@@ -763,30 +762,33 @@
             <h2>مشاريع <span class="highlight">الاستوديو</span></h2>
             <div class="underline"></div>
         </div>
-        <div class="about-grid"> <!-- Using same grid class for consistency -->
+        <div class="about-grid">
+            <!-- Using same grid class for consistency -->
             <!-- Game 1: Cairo Metro -->
             <div class="about-card"
-                style="border-color: var(--metro-red); text-align: right; padding: 0; overflow: hidden;">
-                <div
-                    style="height: 220px; background: url('thegame.jpg') center/cover no-repeat; display: flex; align-items: center; justify-content: center; position: relative;">
+                 style="border-color: var(--metro-red); text-align: right; padding: 0; overflow: hidden;">
+                <div style="height: 220px; background: url('thegame.jpg') center/cover no-repeat; display: flex; align-items: center; justify-content: center; position: relative;">
                     <div style="position: absolute; top: 10px; left: 10px;">
                         <span class="news-badge badge-green">متاح الآن</span>
                     </div>
                 </div>
                 <div style="padding: 2rem; text-align: center;">
                     <h3 style="margin-top: 0;">Cairo Metro Remastered</h3>
-                    <p style="margin-bottom: 1.5rem;">لعبة الرعب الأولى من الاستوديو. تدور أحداثها داخل محطات مترو
-                        القاهرة المهجورة.</p>
-                    <a href="#download" class="btn btn-primary" style="font-size: 0.9rem; padding: 0.5rem 1.5rem;">صفحة
-                        اللعبة</a>
+                    <p style="margin-bottom: 1.5rem;">
+                        لعبة الرعب الأولى من الاستوديو. تدور أحداثها داخل محطات مترو
+                        القاهرة المهجورة.
+                    </p>
+                    <a href="#download" class="btn btn-primary" style="font-size: 0.9rem; padding: 0.5rem 1.5rem;">
+                        صفحة
+                        اللعبة
+                    </a>
                 </div>
             </div>
 
             <!-- Game 2: Next Project -->
             <div class="about-card"
-                style="border-color: rgba(255,255,255,0.1); opacity: 0.7; padding: 0; overflow: hidden;">
-                <div
-                    style="height: 220px; background: linear-gradient(45deg, #0d1016, #1f2937); display: flex; align-items: center; justify-content: center; position: relative;">
+                 style="border-color: rgba(255,255,255,0.1); opacity: 0.7; padding: 0; overflow: hidden;">
+                <div style="height: 220px; background: linear-gradient(45deg, #0d1016, #1f2937); display: flex; align-items: center; justify-content: center; position: relative;">
                     <!-- Future Image Here: style="background: url('image.jpg') center/cover" -->
                     <div style="position: absolute; top: 10px; left: 10px;">
                         <span class="news-badge badge-yellow">قيد التطوير</span>
@@ -796,7 +798,9 @@
                     <h3 style="margin-top: 0; color: var(--text-gray);">Project 2 (Coming Soon)</h3>
                     <p style="margin-bottom: 1.5rem;">المشروع القادم للاستوديو. مغامرة جديدة وعالم مختلف تماماً.</p>
                     <button class="btn btn-secondary" disabled
-                        style="opacity: 0.5; cursor: not-allowed; font-size: 0.9rem; padding: 0.5rem 1.5rem;">قريباً</button>
+                            style="opacity: 0.5; cursor: not-allowed; font-size: 0.9rem; padding: 0.5rem 1.5rem;">
+                        قريباً
+                    </button>
                 </div>
             </div>
         </div>
@@ -897,11 +901,11 @@
             <div class="download-info">
                 <div class="download-stat">
                     <h4>الإصدار</h4>
-                    <p>v2.0.0</p>
+                    <p>v3.0.0</p>
                 </div>
                 <div class="download-stat">
                     <h4>الحجم</h4>
-                    <p>4.9 GB</p>
+                    <p>5.38 GB</p>
                 </div>
                 <div class="download-stat">
                     <h4>التنزيلات</h4>
@@ -913,15 +917,14 @@
                 </div>
             </div>
 
-            <a href="https://drive.usercontent.google.com/download?id=1spPjVM34NqOtqxQ8bNmlJnwqHA-VOcTX&export=download&authuser=0"
-                target="_blank" class="btn btn-primary" style="display: inline-block; margin: 1rem;">
+            <a href="https://drive.google.com/uc?export=download&id=11HJj3DBzSwkt4ZWKqB1SZnG8vzKyyZbN"
+               target="_blank" class="btn btn-primary" style="display: inline-block; margin: 1rem;">
                 ⬇️ تحميل مباشر
             </a>
 
             <div style="margin-top: 3rem; padding-top: 3rem; border-top: 1px solid rgba(255,255,255,0.1);">
                 <h3 style="margin-bottom: 1.5rem;">📋 متطلبات التشغيل</h3>
-                <div
-                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: right;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: right;">
                     <div>
                         <h4 style="color: var(--metro-red); margin-bottom: 1rem;">الحد الأدنى</h4>
                         <p style="font-size: 0.9rem; line-height: 1.8;">
@@ -946,23 +949,22 @@
             </div>
 
             <!-- Donation Section -->
-            <div
-                style="margin-top: 3rem; padding: 2rem; border: 1px solid rgba(234, 179, 8, 0.3); background: rgba(234, 179, 8, 0.05); border-radius: 15px;">
+            <div style="margin-top: 3rem; padding: 2rem; border: 1px solid rgba(234, 179, 8, 0.3); background: rgba(234, 179, 8, 0.05); border-radius: 15px;">
                 <h3 style="color: #eab308; margin-bottom: 1rem; font-family: 'Oswald', sans-serif;">🤝 ادعم المطور</h3>
                 <p style="color: var(--text-gray); margin-bottom: 1.5rem;">لو حابب تدعمني علشان نقدم حاجات اقوي</p>
                 <div style="display: flex; justify-content: center; gap: 2rem; align-items: center;">
                     <a href="https://ipn.eg/S/bankmisr.youssef/instapay/01zYhE" target="_blank"
-                        style="text-decoration: none; text-align: center; display: block;">
+                       style="text-decoration: none; text-align: center; display: block;">
                         <img src="insta-logo.png"
-                            style="height: 50px; width: auto; object-fit: contain; margin-bottom: 0.5rem;"
-                            alt="Instapay">
+                             style="height: 50px; width: auto; object-fit: contain; margin-bottom: 0.5rem;"
+                             alt="Instapay">
                         <p style="font-size: 0.8rem; color: #ccc;">Instapay</p>
                     </a>
                     <a href="http://vf.eg/vfcash?id=mt&qrId=EHoLvk" target="_blank"
-                        style="text-decoration: none; text-align: center; display: block;">
+                       style="text-decoration: none; text-align: center; display: block;">
                         <img src="voda-logo.png"
-                            style="height: 50px; width: auto; object-fit: contain; margin-bottom: 0.5rem;"
-                            alt="Vodafone Cash">
+                             style="height: 50px; width: auto; object-fit: contain; margin-bottom: 0.5rem;"
+                             alt="Vodafone Cash">
                         <p style="font-size: 0.8rem; color: #ccc;">Vodafone Cash</p>
                     </a>
                 </div>
@@ -979,24 +981,34 @@
 
             <div class="social-links">
                 <a href="https://www.youtube.com/@TwinVerseStudio" target="_blank" class="social-link"
-                    title="YouTube"><img src="youtube-logo.png" style="width: 50%; height: auto; object-fit: contain;"
-                        alt="YouTube"></a>
+                   title="YouTube">
+                    <img src="youtube-logo.png" style="width: 50%; height: auto; object-fit: contain;"
+                         alt="YouTube">
+                </a>
                 <a href="https://www.tiktok.com/@twin.verse.studio" target="_blank" class="social-link"
-                    title="TikTok"><img src="tik-tok-logo.png" style="width: 50%; height: auto; object-fit: contain;"
-                        alt="TikTok"></a>
+                   title="TikTok">
+                    <img src="tik-tok-logo.png" style="width: 50%; height: auto; object-fit: contain;"
+                         alt="TikTok">
+                </a>
                 <a href="https://ipn.eg/S/bankmisr.youssef/instapay/01zYhE" target="_blank" class="social-link"
-                    title="Instapay Donation"><img src="insta-logo.png"
-                        style="width: 60%; height: auto; object-fit: contain;" alt="Instapay"></a>
+                   title="Instapay Donation">
+                    <img src="insta-logo.png"
+                         style="width: 60%; height: auto; object-fit: contain;" alt="Instapay">
+                </a>
                 <a href="http://vf.eg/vfcash?id=mt&qrId=EHoLvk" target="_blank" class="social-link"
-                    title="Vodafone Cash Donation"><img src="voda-logo.png"
-                        style="width: 60%; height: auto; object-fit: contain;" alt="Vodafone Cash"></a>
+                   title="Vodafone Cash Donation">
+                    <img src="voda-logo.png"
+                         style="width: 60%; height: auto; object-fit: contain;" alt="Vodafone Cash">
+                </a>
                 <a href="javascript:void(0)" onclick="openContactModal()" class="social-link" title="Contact">✉️</a>
             </div>
 
             <div class="copyright">
                 <p>© 2026 Twin Verse Studio. جميع الحقوق محفوظة.</p>
-                <p style="margin-top: 0.5rem;">صُمم بواسطة <a href="https://www.linkedin.com/in/youssef-kamal-a6a69a269/" target="_blank"
-                        style="color: var(--metro-red); text-decoration: none;"> Youssef Kamal</a></p>
+                <p style="margin-top: 0.5rem;">
+                    صُمم بواسطة <a href="https://www.linkedin.com/in/youssef-kamal-a6a69a269/" target="_blank"
+                                   style="color: var(--metro-red); text-decoration: none;"> Youssef Kamal</a>
+                </p>
             </div>
         </div>
     </footer>
