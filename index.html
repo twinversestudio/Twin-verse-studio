@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cairo Metro Remastered - Twin Verse Studio</title>
+    <title>Twin Verse Studio - Game Development Studio</title>
     <link rel="icon" type="image/png" href="logo.png">
     <style>
         /* استيراد الخطوط */
@@ -18,12 +18,14 @@
         }
 
         :root {
-            --bg-black: #0d1016;
+            --bg-black: #0a0a0f;
             --metro-red: #e11d48;
+            --koshary-orange: #f59e0b;
             --text-white: #ffffff;
             --text-gray: #9ca3af;
-            --zinc-900: #18181b;
-            --zinc-950: #09090b;
+            --zinc-900: #13131a;
+            --zinc-950: #050508;
+            --glass-bg: rgba(255, 255, 255, 0.03);
         }
 
         body {
@@ -33,12 +35,11 @@
             overflow-x: hidden;
             line-height: 1.6;
             padding-top: 80px;
-            /* مساحة للهيدر */
         }
 
         /* شريط التمرير المخصص */
         ::-webkit-scrollbar {
-            width: 10px;
+            width: 8px;
         }
 
         ::-webkit-scrollbar-track {
@@ -46,21 +47,27 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: var(--metro-red);
-            border-radius: 5px;
+            background: linear-gradient(180deg, var(--metro-red), var(--koshary-orange));
+            border-radius: 4px;
         }
 
-        /* الهيدر */
+        /* الهيدر المحسن */
         header {
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 1000;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             padding: 1rem 2rem;
+            transition: all 0.3s ease;
         }
+
+            header.scrolled {
+                background: rgba(10, 10, 15, 0.95);
+                padding: 0.75rem 2rem;
+            }
 
         .header-content {
             max-width: 1400px;
@@ -73,58 +80,85 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
             font-family: 'Oswald', sans-serif;
-            font-size: 1.5rem;
-            font-weight: bold;
+            font-size: 1.4rem;
+            font-weight: 700;
             text-decoration: none;
             color: var(--text-white);
             transition: all 0.3s;
+            letter-spacing: 1px;
         }
 
-        .logo:hover {
-            color: var(--metro-red);
-            transform: scale(1.05);
-        }
+            .logo:hover {
+                color: var(--metro-red);
+                transform: scale(1.05);
+            }
+
+            .logo img {
+                height: 2.2rem;
+                filter: drop-shadow(0 0 10px rgba(225, 29, 72, 0.3));
+            }
 
         nav {
             display: flex;
-            gap: 2rem;
+            gap: 0.5rem;
             align-items: center;
         }
 
-        nav a {
-            color: var(--text-white);
-            text-decoration: none;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            transition: all 0.3s;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-        }
+            nav a {
+                color: var(--text-gray);
+                text-decoration: none;
+                font-weight: 600;
+                text-transform: uppercase;
+                font-size: 0.85rem;
+                letter-spacing: 0.5px;
+                transition: all 0.3s;
+                padding: 0.5rem 1rem;
+                border-radius: 8px;
+                position: relative;
+                overflow: hidden;
+            }
 
-        nav a:hover {
-            color: var(--metro-red);
-            background: rgba(225, 29, 72, 0.1);
-        }
+                nav a::before {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    width: 0;
+                    height: 2px;
+                    background: var(--metro-red);
+                    transition: all 0.3s;
+                    transform: translateX(-50%);
+                }
+
+                nav a:hover {
+                    color: var(--text-white);
+                    background: rgba(255, 255, 255, 0.05);
+                }
+
+                    nav a:hover::before {
+                        width: 60%;
+                    }
 
         .btn-download {
-            background: var(--metro-red);
+            background: linear-gradient(135deg, var(--metro-red), #be123c);
             color: white;
-            padding: 0.75rem 2rem;
+            padding: 0.6rem 1.5rem;
             border-radius: 50px;
-            font-weight: bold;
+            font-weight: 700;
             text-transform: uppercase;
             transition: all 0.3s;
             box-shadow: 0 4px 15px rgba(225, 29, 72, 0.3);
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
         }
 
-        .btn-download:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(225, 29, 72, 0.5);
-        }
+            .btn-download:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(225, 29, 72, 0.5);
+            }
 
         /* قائمة الموبايل */
         .mobile-menu-btn {
@@ -134,6 +168,7 @@
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
+            padding: 0.5rem;
         }
 
         .mobile-menu {
@@ -143,24 +178,64 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.98);
+            background: rgba(5, 5, 8, 0.98);
             z-index: 9999;
             padding: 2rem;
+            backdrop-filter: blur(20px);
         }
 
-        .mobile-menu.active {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            .mobile-menu.active {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 1.5rem;
+            }
+
+            .mobile-menu a {
+                color: white;
+                font-size: 1.8rem;
+                text-decoration: none;
+                font-family: 'Oswald', sans-serif;
+                transition: all 0.3s;
+                opacity: 0;
+                transform: translateY(20px);
+                animation: slideIn 0.5s forwards;
+            }
+
+            .mobile-menu.active a:nth-child(2) {
+                animation-delay: 0.1s;
+            }
+
+            .mobile-menu.active a:nth-child(3) {
+                animation-delay: 0.2s;
+            }
+
+            .mobile-menu.active a:nth-child(4) {
+                animation-delay: 0.3s;
+            }
+
+            .mobile-menu.active a:nth-child(5) {
+                animation-delay: 0.4s;
+            }
+
+            .mobile-menu.active a:nth-child(6) {
+                animation-delay: 0.5s;
+            }
+
+            .mobile-menu.active a:nth-child(7) {
+                animation-delay: 0.6s;
+            }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .mobile-menu a {
-            color: white;
-            font-size: 2rem;
-            margin: 1rem 0;
-            text-decoration: none;
-            font-family: 'Oswald', sans-serif;
+        .mobile-menu a:hover {
+            color: var(--metro-red);
         }
 
         .close-menu {
@@ -170,72 +245,114 @@
             background: none;
             border: none;
             color: white;
-            font-size: 2rem;
+            font-size: 2.5rem;
             cursor: pointer;
+            transition: all 0.3s;
         }
 
-        /* البطل Hero */
+            .close-menu:hover {
+                color: var(--metro-red);
+                transform: rotate(90deg);
+            }
+
+        /* البطل Hero المحسن */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #09090b 0%, #18181b 100%);
+            background: linear-gradient(135deg, var(--zinc-950) 0%, var(--zinc-900) 50%, var(--bg-black) 100%);
             position: relative;
             overflow: hidden;
             padding: 2rem;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background:
-                radial-gradient(circle at 20% 50%, rgba(225, 29, 72, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(225, 29, 72, 0.05) 0%, transparent 50%);
-            animation: pulse 8s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 0.5;
+            .hero::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(circle at 20% 50%, rgba(225, 29, 72, 0.15) 0%, transparent 40%), radial-gradient(circle at 80% 80%, rgba(245, 158, 11, 0.1) 0%, transparent 40%), radial-gradient(circle at 50% 50%, rgba(225, 29, 72, 0.05) 0%, transparent 60%);
+                animation: rotate 20s linear infinite;
             }
 
-            50% {
-                opacity: 1;
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
             }
         }
 
         .hero-content {
             text-align: center;
             z-index: 1;
-            max-width: 1000px;
+            max-width: 900px;
+            position: relative;
+        }
+
+        .studio-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            background: rgba(225, 29, 72, 0.1);
+            border: 1px solid rgba(225, 29, 72, 0.3);
+            border-radius: 50px;
+            color: var(--metro-red);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out;
+            backdrop-filter: blur(10px);
+        }
+
+            .studio-badge::before {
+                content: '●';
+                color: var(--metro-red);
+                animation: pulse 2s infinite;
+            }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
         }
 
         .hero h1 {
             font-family: 'Oswald', sans-serif;
-            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-size: clamp(2.5rem, 6vw, 5rem);
             font-weight: 900;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            background: linear-gradient(45deg, #fff, var(--metro-red));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeInUp 1s ease-out;
+            letter-spacing: 2px;
+            line-height: 1.1;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
         }
 
+            .hero h1 span {
+                background: linear-gradient(135deg, #fff 0%, var(--metro-red) 50%, var(--koshary-orange) 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
         .hero p {
-            font-size: clamp(1rem, 2vw, 1.3rem);
+            font-size: clamp(1rem, 2vw, 1.25rem);
             color: var(--text-gray);
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease-out 0.2s backwards;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease-out 0.4s backwards;
         }
 
         @keyframes fadeInUp {
@@ -255,41 +372,47 @@
             gap: 1rem;
             justify-content: center;
             flex-wrap: wrap;
-            animation: fadeInUp 1s ease-out 0.4s backwards;
+            animation: fadeInUp 1s ease-out 0.6s backwards;
         }
 
         .btn {
             padding: 1rem 2.5rem;
             border-radius: 50px;
-            font-weight: bold;
+            font-weight: 700;
             text-transform: uppercase;
             text-decoration: none;
             transition: all 0.3s;
-            font-size: 1rem;
+            font-size: 0.95rem;
             letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+            cursor: pointer;
         }
 
         .btn-primary {
-            background: var(--metro-red);
+            background: linear-gradient(135deg, var(--metro-red), #be123c);
             color: white;
-            box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4);
+            box-shadow: 0 4px 20px rgba(225, 29, 72, 0.4);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(225, 29, 72, 0.6);
-        }
+            .btn-primary:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 30px rgba(225, 29, 72, 0.6);
+            }
 
         .btn-secondary {
             background: transparent;
             color: white;
-            border: 2px solid white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
         }
 
-        .btn-secondary:hover {
-            background: white;
-            color: black;
-        }
+            .btn-secondary:hover {
+                background: white;
+                color: var(--bg-black);
+                border-color: white;
+            }
 
         /* الأقسام */
         section {
@@ -303,118 +426,348 @@
             margin-bottom: 4rem;
         }
 
-        .section-title h2 {
-            font-family: 'Oswald', sans-serif;
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            text-transform: uppercase;
-            margin-bottom: 1rem;
+            .section-title h2 {
+                font-family: 'Oswald', sans-serif;
+                font-size: clamp(2rem, 4vw, 3.5rem);
+                text-transform: uppercase;
+                margin-bottom: 1rem;
+                letter-spacing: 2px;
+            }
+
+            .section-title .highlight {
+                background: linear-gradient(135deg, var(--metro-red), var(--koshary-orange));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            .section-title .underline {
+                width: 80px;
+                height: 4px;
+                background: linear-gradient(90deg, var(--metro-red), var(--koshary-orange));
+                margin: 0 auto;
+                border-radius: 2px;
+            }
+
+        /* قسم الألعاب المطور */
+        .games-showcase {
+            background: linear-gradient(180deg, var(--zinc-950) 0%, var(--bg-black) 100%);
+            border-radius: 30px;
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .section-title .highlight {
-            color: var(--metro-red);
-        }
-
-        .section-title .underline {
-            width: 100px;
-            height: 4px;
-            background: var(--metro-red);
-            margin: 0 auto;
-            border-radius: 2px;
-        }
-
-        /* About Section */
-        .about-grid {
+        .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .about-card {
-            background: var(--zinc-900);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s;
-            text-align: center;
-        }
-
-        .about-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--metro-red);
-            box-shadow: 0 10px 30px rgba(225, 29, 72, 0.2);
-        }
-
-        .about-card h3 {
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.5rem;
-            margin: 1rem 0;
-            color: var(--metro-red);
-        }
-
-        .about-card p {
-            color: var(--text-gray);
-            line-height: 1.8;
-        }
-
-        /* قسم الأخبار */
-        .news-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
         }
 
-        .news-card {
-            background: var(--zinc-900);
-            border-radius: 15px;
-            overflow: hidden;
-            border-left: 4px solid var(--metro-red);
-            transition: all 0.3s;
-            padding: 2rem;
-        }
-
-        .news-card:hover {
-            transform: translateX(-10px);
-            box-shadow: 0 10px 30px rgba(225, 29, 72, 0.3);
-        }
-
-        .news-badge {
-            display: inline-block;
-            padding: 0.5rem 1rem;
+        .game-card {
+            background: var(--glass-bg);
             border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
 
-        .badge-green {
+            .game-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: linear-gradient(90deg, var(--metro-red), var(--koshary-orange));
+                transform: scaleX(0);
+                transition: transform 0.4s;
+            }
+
+            .game-card:hover {
+                transform: translateY(-10px);
+                border-color: rgba(255, 255, 255, 0.2);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            }
+
+                .game-card:hover::before {
+                    transform: scaleX(1);
+                }
+
+        .game-image {
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .game-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.5s;
+            }
+
+        .game-card:hover .game-image img {
+            transform: scale(1.1);
+        }
+
+        .game-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            backdrop-filter: blur(10px);
+            z-index: 2;
+        }
+
+        .badge-available {
             background: rgba(34, 197, 94, 0.2);
             color: #22c55e;
             border: 1px solid rgba(34, 197, 94, 0.3);
         }
 
-        .badge-blue {
-            background: rgba(59, 130, 246, 0.2);
-            color: #3b82f6;
-            border: 1px solid rgba(59, 130, 246, 0.3);
+        .badge-new {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--koshary-orange);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            animation: glow 2s infinite;
         }
 
-        .badge-yellow {
-            background: rgba(234, 179, 8, 0.2);
-            color: #eab308;
-            border: 1px solid rgba(234, 179, 8, 0.3);
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 5px rgba(245, 158, 11, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(245, 158, 11, 0.6);
+            }
+        }
+
+        .game-content {
+            padding: 2rem;
+        }
+
+            .game-content h3 {
+                font-family: 'Oswald', sans-serif;
+                font-size: 1.8rem;
+                margin-bottom: 0.75rem;
+                color: white;
+            }
+
+            .game-content p {
+                color: var(--text-gray);
+                margin-bottom: 1.5rem;
+                line-height: 1.7;
+            }
+
+        .game-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+            .game-meta span {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+        .game-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-game {
+            flex: 1;
+            min-width: 140px;
+            padding: 0.875rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-metro {
+            background: linear-gradient(135deg, var(--metro-red), #be123c);
+            color: white;
+        }
+
+            .btn-metro:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(225, 29, 72, 0.4);
+            }
+
+        .btn-koshary {
+            background: linear-gradient(135deg, var(--koshary-orange), #d97706);
+            color: white;
+        }
+
+            .btn-koshary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
+            }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+            .btn-outline:hover {
+                background: rgba(255, 255, 255, 0.1);
+                border-color: rgba(255, 255, 255, 0.4);
+            }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .about-card {
+            background: var(--glass-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .about-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, rgba(225, 29, 72, 0.1), transparent);
+                opacity: 0;
+                transition: opacity 0.4s;
+            }
+
+            .about-card:hover {
+                transform: translateY(-10px);
+                border-color: var(--metro-red);
+                box-shadow: 0 15px 35px rgba(225, 29, 72, 0.15);
+            }
+
+                .about-card:hover::before {
+                    opacity: 1;
+                }
+
+            .about-card .icon {
+                font-size: 3.5rem;
+                margin-bottom: 1.5rem;
+                display: block;
+                filter: grayscale(100%);
+                transition: all 0.4s;
+            }
+
+            .about-card:hover .icon {
+                filter: grayscale(0%);
+                transform: scale(1.1);
+            }
+
+            .about-card h3 {
+                font-family: 'Oswald', sans-serif;
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+                color: white;
+                position: relative;
+                z-index: 1;
+            }
+
+            .about-card p {
+                color: var(--text-gray);
+                line-height: 1.8;
+                position: relative;
+                z-index: 1;
+            }
+
+        /* قسم الأخبار */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .news-card {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s;
+            padding: 2rem;
+            position: relative;
+        }
+
+            .news-card::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 3px;
+                background: linear-gradient(90deg, var(--metro-red), var(--koshary-orange));
+                transform: scaleX(0);
+                transition: transform 0.4s;
+                transform-origin: right;
+            }
+
+            .news-card:hover {
+                transform: translateY(-5px);
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+
+                .news-card:hover::after {
+                    transform: scaleX(1);
+                }
+
+        .news-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
         }
 
         .news-card h3 {
             font-family: 'Oswald', sans-serif;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             margin-bottom: 1rem;
+            color: white;
         }
 
         .news-card p {
             color: var(--text-gray);
-            line-height: 1.6;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .news-date {
+            color: #666;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         /* المعرض */
@@ -431,25 +784,31 @@
             overflow: hidden;
             cursor: pointer;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s;
         }
 
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: all 0.5s;
-        }
+            .gallery-item:hover {
+                transform: scale(1.02);
+                border-color: var(--metro-red);
+            }
 
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
+            .gallery-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: all 0.5s;
+            }
+
+            .gallery-item:hover img {
+                transform: scale(1.1);
+            }
 
         .gallery-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 50%);
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 60%);
             opacity: 0;
-            transition: all 0.3s;
+            transition: all 0.4s;
             display: flex;
             align-items: flex-end;
             padding: 2rem;
@@ -462,79 +821,272 @@
         .gallery-overlay h3 {
             font-family: 'Oswald', sans-serif;
             font-size: 1.5rem;
-            color: var(--metro-red);
+            color: white;
+            transform: translateY(20px);
+            transition: transform 0.4s;
         }
 
-        /* التنزيل */
+        .gallery-item:hover .gallery-overlay h3 {
+            transform: translateY(0);
+        }
+
+        /* التنزيل المطور */
         .download-section {
             background: linear-gradient(135deg, var(--zinc-950) 0%, var(--zinc-900) 100%);
-            border-radius: 20px;
-            padding: 4rem 2rem;
+            border-radius: 30px;
+            padding: 4rem 3rem;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .download-section h2 {
-            font-family: 'Oswald', sans-serif;
-            font-size: 3rem;
+            .download-section::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(circle, rgba(225, 29, 72, 0.1) 0%, transparent 50%);
+                animation: rotate 30s linear infinite;
+            }
+
+            .download-section > * {
+                position: relative;
+                z-index: 1;
+            }
+
+            .download-section h2 {
+                font-family: 'Oswald', sans-serif;
+                font-size: clamp(2rem, 4vw, 3rem);
+                margin-bottom: 1rem;
+            }
+
+            .download-section > p {
+                color: var(--text-gray);
+                font-size: 1.2rem;
+                margin-bottom: 3rem;
+            }
+
+        .games-download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .game-download-card {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s;
+        }
+
+            .game-download-card:hover {
+                transform: translateY(-5px);
+                border-color: rgba(255, 255, 255, 0.2);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            }
+
+            .game-download-card.metro {
+                border-top: 4px solid var(--metro-red);
+            }
+
+            .game-download-card.koshary {
+                border-top: 4px solid var(--koshary-orange);
+            }
+
+            .game-download-card h3 {
+                font-family: 'Oswald', sans-serif;
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .game-download-card .version {
+                color: var(--text-gray);
+                font-size: 0.9rem;
+                margin-bottom: 1.5rem;
+            }
+
+        .download-btn-large {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s;
+            width: 100%;
+            justify-content: center;
             margin-bottom: 1rem;
         }
 
-        .download-section p {
-            color: var(--text-gray);
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-        }
+            .download-btn-large.metro-btn {
+                background: linear-gradient(135deg, var(--metro-red), #be123c);
+                box-shadow: 0 4px 15px rgba(225, 29, 72, 0.3);
+            }
 
-        .download-info {
+            .download-btn-large.koshary-btn {
+                background: linear-gradient(135deg, var(--koshary-orange), #d97706);
+                box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+            }
+
+            .download-btn-large:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            }
+
+        .game-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
         }
 
-        .download-stat {
-            padding: 1.5rem;
-            background: rgba(225, 29, 72, 0.1);
-            border-radius: 10px;
-            border: 1px solid rgba(225, 29, 72, 0.2);
+        .stat {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 12px;
         }
 
-        .download-stat h4 {
+        .stat-label {
+            font-size: 0.75rem;
             color: var(--text-gray);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
         }
 
-        .download-stat p {
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 700;
             color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
         }
 
-        /* الفوتر */
+        /* المتطلبات */
+        .requirements {
+            margin-top: 3rem;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+            .requirements h3 {
+                margin-bottom: 2rem;
+                font-family: 'Oswald', sans-serif;
+            }
+
+        .req-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: right;
+        }
+
+        .req-card {
+            background: var(--glass-bg);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+            .req-card h4 {
+                color: var(--metro-red);
+                margin-bottom: 1rem;
+                font-size: 1.1rem;
+            }
+
+            .req-card p {
+                font-size: 0.9rem;
+                line-height: 2;
+                color: var(--text-gray);
+            }
+
+        /* الدعم */
+        .support-section {
+            margin-top: 3rem;
+            padding: 2rem;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.05), rgba(225, 29, 72, 0.05));
+            border-radius: 20px;
+        }
+
+            .support-section h3 {
+                color: var(--koshary-orange);
+                margin-bottom: 1rem;
+                font-family: 'Oswald', sans-serif;
+            }
+
+        .support-methods {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .support-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+            .support-link:hover {
+                background: rgba(255, 255, 255, 0.1);
+                transform: translateY(-2px);
+            }
+
+            .support-link img {
+                height: 30px;
+                width: auto;
+            }
+
+        /* الفوتر المطور */
         footer {
             background: var(--zinc-950);
-            padding: 3rem 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
         }
+
+            footer::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 1px;
+                background: linear-gradient(90deg, transparent, var(--metro-red), var(--koshary-orange), transparent);
+            }
 
         .footer-content {
             max-width: 1400px;
             margin: 0 auto;
+            text-align: center;
         }
 
-        .footer-content h3 {
+        .footer-logo {
             font-family: 'Oswald', sans-serif;
             font-size: 2rem;
             margin-bottom: 1rem;
+            background: linear-gradient(135deg, white, var(--text-gray));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .footer-content p {
+        .footer-content > p {
             color: var(--text-gray);
             margin-bottom: 2rem;
-            max-width: 600px;
+            max-width: 500px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -550,45 +1102,40 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: var(--glass-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             text-decoration: none;
             transition: all 0.3s;
+            font-size: 1.2rem;
         }
 
-        .social-link:hover {
-            border-color: var(--metro-red);
-            background: var(--metro-red);
-            transform: translateY(-3px);
-        }
+            .social-link:hover {
+                border-color: var(--metro-red);
+                background: var(--metro-red);
+                transform: translateY(-5px) rotate(5deg);
+            }
 
         .copyright {
-            margin-top: 2rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
             color: var(--text-gray);
             font-size: 0.9rem;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            header nav {
-                display: none;
+            .copyright a {
+                color: var(--metro-red);
+                text-decoration: none;
+                transition: color 0.3s;
             }
 
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .hero h1 {
-                font-size: 3rem;
-            }
-
-            section {
-                padding: 3rem 1rem;
-            }
-        }
+                .copyright a:hover {
+                    color: var(--koshary-orange);
+                }
 
         /* Modal للتواصل */
         .modal {
@@ -600,38 +1147,70 @@
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            backdrop-filter: blur(10px);
         }
 
-        .modal.active {
-            display: flex;
+            .modal.active {
+                display: flex;
+                animation: fadeIn 0.3s;
+            }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         .modal-content {
             background: var(--zinc-900);
             padding: 3rem;
-            border-radius: 20px;
+            border-radius: 25px;
             max-width: 500px;
             width: 100%;
             border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
+            animation: slideUp 0.4s;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .modal-close {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
+            top: 1.5rem;
+            right: 1.5rem;
             background: none;
             border: none;
             color: white;
             font-size: 2rem;
             cursor: pointer;
             transition: all 0.3s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
         }
 
-        .modal-close:hover {
-            color: var(--metro-red);
-            transform: rotate(90deg);
-        }
+            .modal-close:hover {
+                background: rgba(225, 29, 72, 0.2);
+                color: var(--metro-red);
+                transform: rotate(90deg);
+            }
 
         .modal h3 {
             font-family: 'Oswald', sans-serif;
@@ -644,54 +1223,58 @@
             margin-bottom: 1.5rem;
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-gray);
-            font-weight: 600;
-        }
+            .form-group label {
+                display: block;
+                margin-bottom: 0.5rem;
+                color: var(--text-gray);
+                font-weight: 600;
+                font-size: 0.9rem;
+            }
 
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            background: var(--zinc-950);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: white;
-            font-family: 'Cairo', sans-serif;
-            transition: all 0.3s;
-        }
+            .form-group input,
+            .form-group textarea {
+                width: 100%;
+                padding: 1rem;
+                background: var(--zinc-950);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 12px;
+                color: white;
+                font-family: 'Cairo', sans-serif;
+                transition: all 0.3s;
+                font-size: 1rem;
+            }
 
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--metro-red);
-            box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.1);
-        }
+                .form-group input:focus,
+                .form-group textarea:focus {
+                    outline: none;
+                    border-color: var(--metro-red);
+                    box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.1);
+                }
 
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
+            .form-group textarea {
+                resize: vertical;
+                min-height: 120px;
+            }
 
         .submit-btn {
             width: 100%;
             padding: 1rem 2rem;
-            background: var(--metro-red);
+            background: linear-gradient(135deg, var(--metro-red), #be123c);
             color: white;
             border: none;
             border-radius: 50px;
-            font-weight: bold;
+            font-weight: 700;
             text-transform: uppercase;
             cursor: pointer;
             transition: all 0.3s;
+            font-size: 1rem;
+            letter-spacing: 1px;
         }
 
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(225, 29, 72, 0.4);
-        }
+            .submit-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(225, 29, 72, 0.4);
+            }
 
         /* Loading animation */
         .loader {
@@ -709,23 +1292,88 @@
                 transform: rotate(360deg);
             }
         }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header nav {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .games-showcase {
+                padding: 1.5rem;
+            }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .game-actions {
+                flex-direction: column;
+            }
+
+            .btn-game {
+                width: 100%;
+            }
+
+            .download-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .req-grid {
+                text-align: center;
+            }
+        }
+
+        /* تأثيرات إضافية */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--metro-red), var(--koshary-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
     </style>
 </head>
 
 <body>
     <!-- Header -->
-    <header>
+    <header id="header">
         <div class="header-content">
             <a href="#" class="logo">
-                <img src="logo.png" alt="Twin Verse Studio" style="height: 2rem; width: auto;"> TWIN VERSE STUDIO
+                <img src="logo.png" alt="Twin Verse Studio"> TWIN VERSE STUDIO
             </a>
             <nav>
                 <a href="#home">الـرئيسية</a>
                 <a href="#games">ألعابنا</a>
-                <a href="#about">عن Cairo Metro</a>
+                <a href="#about">عن الاستوديو</a>
                 <a href="#news">الأخبار</a>
                 <a href="#gallery">المعرض</a>
-                <a href="#download" class="btn-download">تحميل اللعبة</a>
+                <a href="#download" class="btn-download">تحميل الألعاب</a>
             </nav>
             <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
         </div>
@@ -736,67 +1384,84 @@
         <button class="close-menu" onclick="toggleMobileMenu()">×</button>
         <a href="#home" onclick="toggleMobileMenu()">الـرئيسية</a>
         <a href="#games" onclick="toggleMobileMenu()">ألعابنا</a>
-        <a href="#about" onclick="toggleMobileMenu()">عن اللعبة</a>
+        <a href="#about" onclick="toggleMobileMenu()">عن الاستوديو</a>
         <a href="#news" onclick="toggleMobileMenu()">الأخبار</a>
         <a href="#gallery" onclick="toggleMobileMenu()">المعرض</a>
-        <a href="#download" onclick="toggleMobileMenu()">تحميل</a>
+        <a href="#download" onclick="toggleMobileMenu()">تحميل الألعاب</a>
     </div>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <span class="news-badge badge-red"
-                style="margin-bottom: 1rem; border: 1px solid var(--metro-red); color: white; background: rgba(225, 29, 72, 0.2);">أحدث
-                إصدار من الاستوديو</span>
-            <h1>CAIRO METRO REMASTERED</h1>
-            <p>تجربة رعب نفسي في أعماق مترو القاهرة. واجه مخاوفك وحل الألغاز المعقدة في الظلام</p>
+            <div class="studio-badge">
+                استوديو تطوير ألعاب مصري مستقل
+            </div>
+            <h1>نصنع <span>عوالم</span><br>تبقى في الذاكرة</h1>
+            <p>تجارب ألعاب فريدة من نوعها، من رعب المترو المظلم إلى شوارع الكشري الصاخبة. نبني ألعاباً تلامس الواقع المصري بأسلوب عالمي.</p>
             <div class="hero-buttons">
-                <a href="#download" class="btn btn-primary">تحميل الآن</a>
-                <a href="#games" class="btn btn-secondary">تصفح كل الألعاب</a>
+                <a href="#games" class="btn btn-primary">استكشف ألعابنا</a>
+                <a href="#about" class="btn btn-secondary">اعرف أكتر</a>
             </div>
         </div>
     </section>
 
-    <!-- Games Section (New Studio Section) -->
-    <section id="games" style="background: var(--zinc-900);">
+    <!-- Games Section -->
+    <section id="games">
         <div class="section-title">
             <h2>مشاريع <span class="highlight">الاستوديو</span></h2>
             <div class="underline"></div>
         </div>
-        <div class="about-grid"> <!-- Using same grid class for consistency -->
-            <!-- Game 1: Cairo Metro -->
-            <div class="about-card"
-                style="border-color: var(--metro-red); text-align: right; padding: 0; overflow: hidden;">
-                <div
-                    style="height: 220px; background: url('thegame.jpg') center/cover no-repeat; display: flex; align-items: center; justify-content: center; position: relative;">
-                    <div style="position: absolute; top: 10px; left: 10px;">
-                        <span class="news-badge badge-green">متاح الآن</span>
-                    </div>
-                </div>
-                <div style="padding: 2rem; text-align: center;">
-                    <h3 style="margin-top: 0;">Cairo Metro Remastered</h3>
-                    <p style="margin-bottom: 1.5rem;">لعبة الرعب الأولى من الاستوديو. تدور أحداثها داخل محطات مترو
-                        القاهرة المهجورة.</p>
-                    <a href="#download" class="btn btn-primary" style="font-size: 0.9rem; padding: 0.5rem 1.5rem;">صفحة
-                        اللعبة</a>
-                </div>
-            </div>
 
-            <!-- Game 2: Next Project -->
-            <div class="about-card"
-                style="border-color: rgba(255,255,255,0.1); opacity: 0.7; padding: 0; overflow: hidden;">
-                <div
-                    style="height: 220px; background: linear-gradient(45deg, #0d1016, #1f2937); display: flex; align-items: center; justify-content: center; position: relative;">
-                    <!-- Future Image Here: style="background: url('image.jpg') center/cover" -->
-                    <div style="position: absolute; top: 10px; left: 10px;">
-                        <span class="news-badge badge-yellow">قيد التطوير</span>
+        <div class="games-showcase">
+            <div class="games-grid">
+                <!-- Koshary Simulator - NEW -->
+                <div class="game-card">
+                    <div class="game-image">
+                        <img src="koshary-simulator.jpg" alt="Koshary Simulator" onerror="this.src='https://img.itch.zone/aW1nLzE5MTQ5NzY1LnBuZw==/original/nX%2F%2FZP.png'">
+                        <span class="game-badge badge-new">🆕 جديد</span>
+                    </div>
+                    <div class="game-content">
+                        <h3>Koshary Simulator</h3>
+                        <p>جرب حماس امتلاك مطعم كشري في قلب القاهرة! لعبة محاكاة مصرية أصيلة تجمع بين الإدارة، السرعة، والطابع الكوميدي المصري.</p>
+                        <div class="game-meta">
+                            <span>🎮 محاكاة</span>
+                            <span>⚡ كاجوال</span>
+                            <span>🇪🇬 مصري</span>
+                        </div>
+                        <div class="game-actions">
+                            <a href="https://twin-verse.itch.io/koshary-simulator" target="_blank" class="btn-game btn-koshary">
+                                🎮 العب الآن
+                            </a>
+                            <a href="https://twin-verse.itch.io/koshary-simulator" target="_blank" class="btn-game btn-outline">
+                                👁️ تفاصيل
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div style="padding: 2rem; text-align: center;">
-                    <h3 style="margin-top: 0; color: var(--text-gray);">Project 2 (Coming Soon)</h3>
-                    <p style="margin-bottom: 1.5rem;">المشروع القادم للاستوديو. مغامرة جديدة وعالم مختلف تماماً.</p>
-                    <button class="btn btn-secondary" disabled
-                        style="opacity: 0.5; cursor: not-allowed; font-size: 0.9rem; padding: 0.5rem 1.5rem;">قريباً</button>
+
+                <!-- Cairo Metro -->
+                <div class="game-card">
+                    <div class="game-image">
+                        <img src="thegame.jpg" alt="Cairo Metro Remastered">
+                        <span class="game-badge badge-available">✓ متاح</span>
+                    </div>
+                    <div class="game-content">
+                        <h3>Cairo Metro Remastered</h3>
+                        <p>تجربة رعب نفسي في أعماق مترو القاهرة. واجه مخاوفك وحل الألغاز المعقدة في الظلام الدامس.</p>
+                        <div class="game-meta">
+                            <span>😱 رعب</span>
+                            <span>🧩 ألغاز</span>
+                            <span>🎬 سينمائي</span>
+                        </div>
+                        <div class="game-actions">
+                            <a href="#download" class="btn-game btn-metro">
+                                ⬇️ تحميل
+                            </a>
+                            <a href="#about" class="btn-game btn-outline">
+                                👁️ تفاصيل
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -805,29 +1470,29 @@
     <!-- About Section -->
     <section id="about">
         <div class="section-title">
-            <h2>عن <span class="highlight">اللعبة</span></h2>
+            <h2>لماذا <span class="highlight">نحن مختلفون؟</span></h2>
             <div class="underline"></div>
         </div>
         <div class="about-grid">
             <div class="about-card">
-                <div style="font-size: 3rem; margin-bottom: 1rem;">🧩</div>
-                <h3>ألغاز معقدة</h3>
-                <p>حل ألغاز مبتكرة ومعقدة في كل مستوى. كل لغز يكشف جزءاً من القصة المخيفة</p>
+                <span class="icon">🎯</span>
+                <h3>رؤية مصرية</h3>
+                <p>نقدم قصصاً وأماكناً مصرية أصيلة بطريقة عالمية المستوى، من المترو للكشري</p>
             </div>
             <div class="about-card">
-                <div style="font-size: 3rem; margin-bottom: 1rem;">👁️</div>
-                <h3>تجربة سينمائية</h3>
-                <p>استمتع بمشاهد سينمائية مذهلة وقصة غامضة تجذبك من أول لحظة</p>
+                <span class="icon">⚡</span>
+                <h3>تجارب متنوعة</h3>
+                <p>من الرعب النفسي العميق للكوميديا الكاجوال، نصنع ألعاباً لكل الأذواق</p>
             </div>
             <div class="about-card">
-                <div style="font-size: 3rem; margin-bottom: 1rem;">😱</div>
-                <h3>رعب نفسي</h3>
-                <p>أجواء مرعبة وموسيقى تصويرية تخلق تجربة رعب لا تُنسى</p>
+                <span class="icon">💎</span>
+                <h3>جودة فائقة</h3>
+                <p>كل لعبة نصنعها هي تحفة فنية، سواء كان المشروع كبير أو صغير</p>
             </div>
             <div class="about-card">
-                <div style="font-size: 3rem; margin-bottom: 1rem;">❤️</div>
+                <span class="icon">❤️</span>
                 <h3>صُنع بشغف</h3>
-                <p>تم تطوير اللعبة بالكامل من قبل مطور مستقل مصري</p>
+                <p>استوديو مستقل واحد يضع قلبه في كل بكسل يصنعه</p>
             </div>
         </div>
     </section>
@@ -840,22 +1505,22 @@
         </div>
         <div class="news-grid">
             <div class="news-card">
-                <span class="news-badge badge-green">✓ تم الإصدار</span>
-                <h3>الإطلاق الرسمي</h3>
-                <p>Cairo Metro Remastered متاح الآن! جرب رعب الأعماق واستكشف أسرار المترو المظلم</p>
-                <small style="color: #666; display: block; margin-top: 1rem;">2 ديسمبر 2025</small>
+                <span class="news-badge badge-new">🆕 إطلاق جديد</span>
+                <h3>Koshary Simulator متاح الآن!</h3>
+                <p>انضم لحماس امتلاك مطعم كشري! اللعبة متاحة للعب المباشر على itch.io</p>
+                <div class="news-date">📅 أبريل 2026</div>
             </div>
             <div class="news-card">
-                <span class="news-badge badge-blue">⚡ Patch 1.1</span>
-                <h3>تحسينات كبرى</h3>
-                <p>تحسينات في الأداء والاستقرار. إصلاحات للإضاءة وتحسين الأداء لجميع الأنظمة</p>
-                <small style="color: #666; display: block; margin-top: 1rem;">16 يناير 2026</small>
+                <span class="news-badge badge-available">✓ تم الإصدار</span>
+                <h3>Cairo Metro Remastered</h3>
+                <p>الإصدار الرسمي للعبة الرعب النفسية المصرية الأولى من نوعها</p>
+                <div class="news-date">📅 ديسمبر 2025</div>
             </div>
             <div class="news-card">
-                <span class="news-badge badge-yellow">🚧 قريباً</span>
-                <h3>لعبة قوية قادمة</h3>
-                <p>فكرة جديدة بتصميم جديد</p>
-                <small style="color: #666; display: block; margin-top: 1rem;">قريباً</small>
+                <span class="news-badge badge-green">⚡ تحديث</span>
+                <h3>Patch 1.1 لـ Cairo Metro</h3>
+                <p>تحسينات في الأداء والإضاءة وإصلاحات للإستقرار على جميع الأنظمة</p>
+                <div class="news-date">📅 يناير 2026</div>
             </div>
         </div>
     </section>
@@ -863,7 +1528,7 @@
     <!-- Gallery Section -->
     <section id="gallery">
         <div class="section-title">
-            <h2><span class="highlight">المعرض</span></h2>
+            <h2><span class="highlight">لقطات</span> من ألعابنا</h2>
             <div class="underline"></div>
         </div>
         <div class="gallery-grid">
@@ -874,8 +1539,14 @@
                 </div>
             </div>
             <div class="gallery-item">
+                <img src="koshary-gameplay.jpg" alt="Koshary Gameplay">
+                <div class="gallery-overlay">
+                    <h3>مطبخ الكشري</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
                 <img src="gallery_3.png" alt="Dark Corridors">
-                <div class="overlay">
+                <div class="gallery-overlay">
                     <h3>الأنفاق المظلمة</h3>
                 </div>
             </div>
@@ -891,40 +1562,55 @@
     <!-- Download Section -->
     <section id="download">
         <div class="download-section">
-            <h2>حمّل اللعبة الآن</h2>
-            <p>جرب تجربة الرعب الفريدة مجاناً</p>
+            <h2>حمّل ألعابنا الآن</h2>
+            <p>اختر لعبتك وابدأ المغامرة فوراً</p>
 
-            <div class="download-info">
-                <div class="download-stat">
-                    <h4>الإصدار</h4>
-                    <p>v2.0.0</p>
+            <div class="games-download-grid">
+                <!-- Koshary Download -->
+                <div class="game-download-card koshary">
+                    <h3 class="gradient-text">Koshary Simulator</h3>
+                    <p class="version">أحدث إصدار • متاح على المتصفح</p>
+                    <a href="https://twin-verse.itch.io/koshary-simulator" target="_blank" class="download-btn-large koshary-btn">
+                        🎮 العب مباشرة
+                    </a>
+                    <div class="game-stats">
+                        <div class="stat">
+                            <div class="stat-label">النوع</div>
+                            <div class="stat-value">محاكاة</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">المنصة</div>
+                            <div class="stat-value">Pc And Mobile</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="download-stat">
-                    <h4>الحجم</h4>
-                    <p>4.9 GB</p>
-                </div>
-                <div class="download-stat">
-                    <h4>التنزيلات</h4>
-                    <p>7,500+</p>
-                </div>
-                <div class="download-stat">
-                    <h4>النظام</h4>
-                    <p>Windows</p>
+
+                <!-- Metro Download -->
+                <div class="game-download-card metro">
+                    <h3 style="color: var(--metro-red);">Cairo Metro Remastered</h3>
+                    <p class="version">v2.0.0 • Windows</p>
+                    <a href="https://drive.usercontent.google.com/download?id=1spPjVM34NqOtqxQ8bNmlJnwqHA-VOcTX&export=download&authuser=0" target="_blank" class="download-btn-large metro-btn">
+                        ⬇️ تحميل مباشر
+                    </a>
+                    <div class="game-stats">
+                        <div class="stat">
+                            <div class="stat-label">الحجم</div>
+                            <div class="stat-value">4.9 GB</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">التنزيلات</div>
+                            <div class="stat-value">7,800+</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <a href="https://drive.usercontent.google.com/download?id=1spPjVM34NqOtqxQ8bNmlJnwqHA-VOcTX&export=download&authuser=0"
-                target="_blank" class="btn btn-primary" style="display: inline-block; margin: 1rem;">
-                ⬇️ تحميل مباشر
-            </a>
-
-            <div style="margin-top: 3rem; padding-top: 3rem; border-top: 1px solid rgba(255,255,255,0.1);">
-                <h3 style="margin-bottom: 1.5rem;">📋 متطلبات التشغيل</h3>
-                <div
-                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: right;">
-                    <div>
-                        <h4 style="color: var(--metro-red); margin-bottom: 1rem;">الحد الأدنى</h4>
-                        <p style="font-size: 0.9rem; line-height: 1.8;">
+            <div class="requirements">
+                <h3>📋 متطلبات تشغيل Cairo Metro</h3>
+                <div class="req-grid">
+                    <div class="req-card">
+                        <h4>الحد الأدنى</h4>
+                        <p>
                             <strong>OS:</strong> Windows 10 64-bit<br>
                             <strong>CPU:</strong> Intel i3-8100F<br>
                             <strong>RAM:</strong> 8 GB<br>
@@ -932,71 +1618,63 @@
                             <strong>Storage:</strong> 4.9 GB
                         </p>
                     </div>
-                    <div>
-                        <h4 style="color: var(--metro-red); margin-bottom: 1rem;">الموصى به</h4>
-                        <p style="font-size: 0.9rem; line-height: 1.8;">
-                            <strong>OS:</strong> Windows 10 64-bit<br>
+                    <div class="req-card">
+                        <h4>الموصى به</h4>
+                        <p>
+                            <strong>OS:</strong> Windows 10/11 64-bit<br>
                             <strong>CPU:</strong> Intel i5-9400F<br>
                             <strong>RAM:</strong> 8 GB<br>
                             <strong>GPU:</strong> GTX 1050<br>
-                            <strong>Storage:</strong> 4.9 GB
+                            <strong>Storage:</strong> 4.9 GB SSD
                         </p>
                     </div>
                 </div>
             </div>
 
-            <!-- Donation Section -->
-            <div
-                style="margin-top: 3rem; padding: 2rem; border: 1px solid rgba(234, 179, 8, 0.3); background: rgba(234, 179, 8, 0.05); border-radius: 15px;">
-                <h3 style="color: #eab308; margin-bottom: 1rem; font-family: 'Oswald', sans-serif;">🤝 ادعم المطور</h3>
-                <p style="color: var(--text-gray); margin-bottom: 1.5rem;">لو حابب تدعمني علشان نقدم حاجات اقوي</p>
-                <div style="display: flex; justify-content: center; gap: 2rem; align-items: center;">
-                    <a href="https://ipn.eg/S/bankmisr.youssef/instapay/01zYhE" target="_blank"
-                        style="text-decoration: none; text-align: center; display: block;">
-                        <img src="insta-logo.png"
-                            style="height: 50px; width: auto; object-fit: contain; margin-bottom: 0.5rem;"
-                            alt="Instapay">
-                        <p style="font-size: 0.8rem; color: #ccc;">Instapay</p>
+            <!-- Support Section -->
+            <div class="support-section">
+                <h3>🤝 ادعم استمرارنا</h3>
+                <p style="color: var(--text-gray); margin-bottom: 1rem;">مساهمتك تساعدنا في تطوير ألعاب أكبر وأفضل</p>
+                <div class="support-methods">
+                    <a href="https://ipn.eg/S/bankmisr.youssef/instapay/01zYhE" target="_blank" class="support-link">
+                        <img src="insta-logo.png" alt="Instapay">
+                        <span>Instapay</span>
                     </a>
-                    <a href="http://vf.eg/vfcash?id=mt&qrId=EHoLvk" target="_blank"
-                        style="text-decoration: none; text-align: center; display: block;">
-                        <img src="voda-logo.png"
-                            style="height: 50px; width: auto; object-fit: contain; margin-bottom: 0.5rem;"
-                            alt="Vodafone Cash">
-                        <p style="font-size: 0.8rem; color: #ccc;">Vodafone Cash</p>
+                    <a href="http://vf.eg/vfcash?id=mt&qrId=EHoLvk" target="_blank" class="support-link">
+                        <img src="voda-logo.png" alt="Vodafone Cash">
+                        <span>Vodafone Cash</span>
                     </a>
                 </div>
             </div>
-        </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <h3>Twin Verse Studio</h3>
-            <p>العقول خلف Twin Verse. نبني تجارب تطاردك بعد انتهاء اللعب.</p>
+            <div class="footer-logo">TWIN VERSE STUDIO</div>
+            <p>نبني تجارب تطاردك بعد انتهاء اللعب. استوديو مصري مستقل يصنع ألعاباً عالمية المستوى.</p>
 
             <div class="social-links">
-                <a href="https://www.youtube.com/@TwinVerseStudio" target="_blank" class="social-link"
-                    title="YouTube"><img src="youtube-logo.png" style="width: 50%; height: auto; object-fit: contain;"
-                        alt="YouTube"></a>
-                <a href="https://www.tiktok.com/@twin.verse.studio" target="_blank" class="social-link"
-                    title="TikTok"><img src="tik-tok-logo.png" style="width: 50%; height: auto; object-fit: contain;"
-                        alt="TikTok"></a>
-                <a href="https://ipn.eg/S/bankmisr.youssef/instapay/01zYhE" target="_blank" class="social-link"
-                    title="Instapay Donation"><img src="insta-logo.png"
-                        style="width: 60%; height: auto; object-fit: contain;" alt="Instapay"></a>
-                <a href="http://vf.eg/vfcash?id=mt&qrId=EHoLvk" target="_blank" class="social-link"
-                    title="Vodafone Cash Donation"><img src="voda-logo.png"
-                        style="width: 60%; height: auto; object-fit: contain;" alt="Vodafone Cash"></a>
-                <a href="javascript:void(0)" onclick="openContactModal()" class="social-link" title="Contact">✉️</a>
+                <a href="https://www.youtube.com/@TwinVerseStudio" target="_blank" class="social-link" title="YouTube">
+                    <img src="youtube-logo.png" style="width: 24px; height: auto;" alt="YT">
+                </a>
+                <a href="https://www.tiktok.com/@twin.verse.studio" target="_blank" class="social-link" title="TikTok">
+                    <img src="tik-tok-logo.png" style="width: 24px; height: auto;" alt="TT">
+                </a>
+                <a href="https://twin-verse.itch.io/" target="_blank" class="social-link" title="Itch.io">
+                    🎮
+                </a>
+                <a href="javascript:void(0)" onclick="openContactModal()" class="social-link" title="Contact">
+                    ✉️
+                </a>
             </div>
 
             <div class="copyright">
                 <p>© 2026 Twin Verse Studio. جميع الحقوق محفوظة.</p>
-                <p style="margin-top: 0.5rem;">صُمم بواسطة <a href="https://www.linkedin.com/in/youssef-kamal-a6a69a269/" target="_blank"
-                        style="color: var(--metro-red); text-decoration: none;"> Youssef Kamal</a></p>
+                <p style="margin-top: 0.5rem;">
+                    صُمم بواسطة <a href="https://www.linkedin.com/in/youssef-kamal-a6a69a269/" target="_blank">Youssef Kamal</a>
+                </p>
             </div>
         </div>
     </footer>
@@ -1007,7 +1685,7 @@
             <button class="modal-close" onclick="closeContactModal()">×</button>
             <h3>تواصل معنا</h3>
             <form action="https://formsubmit.co/twinversestudio@gmail.com" method="POST" id="contactForm">
-                <input type="hidden" name="_subject" value="رسالة جديدة من موقع Cairo Metro">
+                <input type="hidden" name="_subject" value="رسالة جديدة من موقع Twin Verse Studio">
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_next" value="about:blank">
 
@@ -1037,10 +1715,21 @@
     </div>
 
     <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function () {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
         // Toggle Mobile Menu
         function toggleMobileMenu() {
             const menu = document.getElementById('mobileMenu');
             menu.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : 'auto';
         }
 
         // Contact Modal
@@ -1081,17 +1770,20 @@
             btn.innerHTML = '<span class="loader"></span> جاري الإرسال...';
             btn.disabled = true;
 
-            // Reset after submission
             setTimeout(() => {
-                btn.innerHTML = 'إرسال الرسالة';
-                btn.disabled = false;
-            }, 3000);
+                btn.innerHTML = '✓ تم الإرسال';
+                setTimeout(() => {
+                    btn.innerHTML = 'إرسال الرسالة';
+                    btn.disabled = false;
+                    closeContactModal();
+                }, 2000);
+            }, 2000);
         });
 
-        // Add scroll animations
+        // Intersection Observer for animations
         const observerOptions = {
             threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
+            rootMargin: '0px 0px -50px 0px'
         };
 
         const observer = new IntersectionObserver(function (entries) {
@@ -1103,18 +1795,18 @@
             });
         }, observerOptions);
 
-        // Observe all sections and cards
-        document.querySelectorAll('section, .about-card, .news-card, .gallery-item').forEach(el => {
+        // Observe elements
+        document.querySelectorAll('.game-card, .about-card, .news-card, .gallery-item, .game-download-card').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s ease-out';
+            el.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
             observer.observe(el);
         });
 
         // Parallax effect for hero
         window.addEventListener('scroll', function () {
             const scrolled = window.pageYOffset;
-            const hero = document.querySelector('.hero');
+            const hero = document.querySelector('.hero::before');
             if (hero) {
                 hero.style.transform = `translateY(${scrolled * 0.5}px)`;
             }
@@ -1122,15 +1814,18 @@
 
         // Keyboard shortcuts
         document.addEventListener('keydown', function (e) {
-            // ESC to close modal
             if (e.key === 'Escape') {
                 closeContactModal();
-                toggleMobileMenu();
+                const menu = document.getElementById('mobileMenu');
+                if (menu.classList.contains('active')) {
+                    toggleMobileMenu();
+                }
             }
         });
 
-        console.log('%c🎮 Cairo Metro Remastered', 'font-size: 24px; color: #e11d48; font-weight: bold;');
-        console.log('%cWebsite by Twin Verse Studio', 'font-size: 14px; color: #666;');
+        // Console easter egg
+        console.log('%c🎮 Twin Verse Studio', 'font-size: 24px; font-weight: bold; background: linear-gradient(135deg, #e11d48, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;');
+        console.log('%cMade with ❤️ in Egypt', 'font-size: 14px; color: #666;');
     </script>
 </body>
 
